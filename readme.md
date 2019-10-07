@@ -5,7 +5,7 @@ Installation:
 2. Edit your .env file
 3. Run migrations: php artisan migrate
 4. Run seeders: php artisan db:seed
-5. Run compilation: npm run dev
+5. Run compilation: npm run prod
 
 Site model:
 - vue components: resources\assets\js\components
