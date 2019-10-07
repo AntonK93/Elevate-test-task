@@ -15,3 +15,7 @@ Site model:
 - Eloquent ORM models for working with database: app\
 - migrations for creating tables: database\migrations
 - seeders for filling tables: database\seeds
+
+Instruction:
+After compilation site on the first page you'll see list of warehouses which filled as it mentioned in technical description.
+By default warehouses don't have rooms and their status is ok. You need to configure your location and after it open any warehouse for fill its rooms, you're able to add/delete rooms as you want.
