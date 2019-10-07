@@ -81,6 +81,7 @@ ul {
                 <div v-for="room, index in rooms">
                 <form v-on:submit="saveRoom(room)">
                     <ul>
+                        <li><input type="text" v-model="room.id" class="form-control"></li>
                         <li><input type="text" v-model="room.Name" class="form-control"></li>
                         <li><input type="text" v-model="room.Temperature" class="form-control"></li>
                         <li style="width:50px !important; padding: 0px !important;"><span>&deg;C</span></li>
@@ -134,9 +135,11 @@ ul {
                     var app = this;
                     axios.delete('api/rooms/' + id)
                         .then(function (resp) {
+                            app.$router.go();
                             app.rooms.splice(index, 1);
                         })
                         .catch(function (resp) {
+                            console.log(resp);
                             alert("Could not delete room");
                         });
                 }

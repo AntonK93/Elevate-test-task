@@ -16,7 +16,11 @@ class Warehouses extends Model
 
     public function getHighestRoomTemperature()
     {
-      return $this->getRooms()->orderBy('Temperature','desc')->first()->Temperature;
+      $highestTemp = $this->getRooms()->orderBy('Temperature','desc')->first();
+      if (!$highestTemp)
+          return 0;
+
+      return $highestTemp->Temperature;
     }
 
 }

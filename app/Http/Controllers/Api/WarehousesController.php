@@ -10,13 +10,15 @@ use App\Warehouses;
 class WarehousesController extends Controller
 {
     private $openMap;
+    private $statuses;
 
     /**
-     * Injected dependency of OpenMap
+     * Injected dependency of OpenMap,StatusesController
      */
-    public function __construct(OpenMapDistance $openMap)
+    public function __construct(OpenMapDistance $openMap, StatusesController $statusesController)
     {
         $this->openMap = $openMap;
+        $this->statuses = $statusesController;
     }
 
     /**
@@ -27,6 +29,20 @@ class WarehousesController extends Controller
     public function index()
     {
         return Warehouses::all();
+    }
+
+    /**
+     * Update status of warehouse
+     */
+    public function updateTemperatureOfWarehouse($id) 
+    {
+        $warehouse = Warehouses::findOrFail($id);
+
+        $highetWarehouseTemperature = $warehouse->getHighestRoomTemperature();
+
+        $getStatus = $this->statuses->getStatusOfDegree($highetWarehouseTemperature);
+        
+        $warehouse->update(['Status' => $getStatus->Name, 'Temperature' => $highetWarehouseTemperature]);
     }
 
     /**

@@ -8,26 +8,14 @@ use App\Rooms;
 
 class RoomsController extends Controller
 {
-    private $statuses;
+    private $warehouses;
 
     /**
-     * Injected dependency of statusesController
+     * Injected dependency of WarehousesController
      */
-    public function __construct(StatusesController $statusesController)
+    public function __construct(WarehousesController $warehousesController)
     {
-        $this->statuses = $statusesController;
-    }
-
-    /**
-     * Update status of warehouse
-     */
-    protected function updateTemperatureOfWarehouse($warehouse) 
-    {
-        $highetWarehouseTemperature = $warehouse->getHighestRoomTemperature();
-
-        $getStatus = $this->statuses->getStatusOfDegree($highetWarehouseTemperature);
-        
-        $warehouse->update(['Status' => $getStatus->Name, 'Temperature' => $highetWarehouseTemperature]);
+        $this->warehouses = $warehousesController;
     }
 
     /**
@@ -49,7 +37,7 @@ class RoomsController extends Controller
     public function store(Request $request)
     {
         $room = Rooms::create($request->all());
-        $this->updateTemperatureOfWarehouse($room->getWarehouse());
+        $this->warehouses->updateTemperatureOfWarehouse($room->getWarehouse()->id);
         return $room;
     }
     
@@ -75,7 +63,7 @@ class RoomsController extends Controller
     {
         $room = Rooms::findOrFail($id);
         $room->update($request->all());
-        $this->updateTemperatureOfWarehouse($room->getWarehouse());
+        $this->warehouses->updateTemperatureOfWarehouse($room->getWarehouse()->id);
         return $room;
     }
 
@@ -88,9 +76,8 @@ class RoomsController extends Controller
     public function destroy($id)
     {
         $room = Rooms::findOrFail($id);
-        $warehouse = $room->getWarehouse();
         $room->delete();
-        $this->updateTemperatureOfWarehouse($warehouse);
+        $this->warehouses->updateTemperatureOfWarehouse($room->getWarehouse()->id);
         return '';
     }
 }

@@ -9,7 +9,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('statuses')->insert([
             'name' => 'ok',
-            'Threshold' => 0
+            'Threshold' => -1
         ]);
 
         DB::table('statuses')->insert([
