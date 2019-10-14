@@ -35,7 +35,7 @@ ul {
             </ul>
         </div>
 
-        <form v-on:submit="saveWarehouse()">
+        <form @submit.prevent="saveWarehouse()">
             <router-link to="/" class="btn btn-default">Back</router-link>
             <div class="panel panel-default" id="warehouse">
                 <div class="form-group">
@@ -79,7 +79,7 @@ ul {
             </ul>
             </div>
                 <div v-for="room, index in rooms">
-                <form v-on:submit="saveRoom(room)">
+                <form @submit.prevent="saveRoom(room)">
                     <ul>
                         <li><input type="text" v-model="room.Name" class="form-control"></li>
                         <li><input type="text" v-model="room.Temperature" class="form-control"></li>
@@ -144,7 +144,6 @@ ul {
                 }
             },
             saveWarehouse() {
-                event.preventDefault();
                 var app = this;
                 var updatedWarehouse = app.warehouse;
                 axios.put('api/warehouses/' + app.warehouseId, updatedWarehouse)
@@ -157,7 +156,6 @@ ul {
                     });
             },
             saveRoom(room) {
-                event.preventDefault();
                 var app = this;
                 var updatedRoom = room;
                 console.log(room.Temperature);

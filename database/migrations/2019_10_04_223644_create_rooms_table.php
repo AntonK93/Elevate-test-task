@@ -15,8 +15,8 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id'); //Id
-            $table->integer('Warehouse')->unsigned()->default(1);
-            $table->foreign('Warehouse')->references('Id')->on('warehouses');
+            $table->integer('WarehouseId')->unsigned()->default(1);
+            $table->foreign('WarehouseId')->references('Id')->on('warehouses');
             $table->string('Name');
             $table->integer('Temperature');
           //  $table->timestamps();

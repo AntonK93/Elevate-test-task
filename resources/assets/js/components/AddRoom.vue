@@ -9,7 +9,7 @@
 </style>
 <template>
     <div>
-        <form v-on:submit="createRoom()">
+        <form @submit.prevent="createRoom()">
         <router-link to="/" class="btn btn-default">Back</router-link>
 
             <div class="panel panel-default">
@@ -43,7 +43,7 @@
         data: function () {
             return {
                 room: {
-                    Warehouse: '',
+                    WarehouseId: '',
                     Name: '',
                     Temperature: '',
                 }
@@ -51,9 +51,8 @@
         },
         methods: {
             createRoom() {
-                event.preventDefault();
                 var app = this;
-                app.room.Warehouse = app.$route.params.id;
+                app.room.WarehouseId = app.$route.params.id;
                 var newRoom = app.room;
                 axios.post('api/rooms', newRoom)
                     .then(function (resp) {

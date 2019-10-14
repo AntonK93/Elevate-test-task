@@ -11,7 +11,7 @@ class Warehouses extends Model
 
     public function getRooms()
     {
-      return $this->hasMany('App\Model\Rooms', 'Warehouse');
+      return $this->hasMany('App\Model\Rooms', 'WarehouseId');
     }
 
     public function getHighestRoomTemperature()

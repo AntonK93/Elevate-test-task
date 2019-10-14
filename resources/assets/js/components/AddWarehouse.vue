@@ -9,7 +9,7 @@
 </style>
 <template>
     <div>
-        <form v-on:submit="createForm()">
+        <form @submit.prevent="createForm()">
         <router-link to="/" class="btn btn-default">Back</router-link>
             <div class="panel panel-default">
             <div class="form-group">
@@ -52,7 +52,6 @@
         },
         methods: {
             createForm() {
-                event.preventDefault();
                 var app = this;
                 var newWarehouse = app.warehouse;
                 axios.post('api/warehouses', newWarehouse)
