@@ -4,20 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Rooms;
+use App\Model\Rooms;
+use App\Http\Services\WarehouseService;
 
 class RoomsController extends Controller
 {
-    private $warehouses;
+    private $warehouseService;
 
     /**
-     * Injected dependency of WarehousesController
+     * Injected dependency of WarehouseService
      */
-    public function __construct(WarehousesController $warehousesController)
+    public function __construct(WarehouseService $warehouseService)
     {
-        $this->warehouses = $warehousesController;
+        $this->warehouseService = $warehouseService;
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +38,7 @@ class RoomsController extends Controller
     public function store(Request $request)
     {
         $room = Rooms::create($request->all());
-        $this->warehouses->updateTemperatureOfWarehouse($room->getWarehouse()->id);
+        $this->warehouseService->updateTemperatureOfWarehouse($room->getWarehouse());
         return $room;
     }
     
@@ -63,7 +64,7 @@ class RoomsController extends Controller
     {
         $room = Rooms::findOrFail($id);
         $room->update($request->all());
-        $this->warehouses->updateTemperatureOfWarehouse($room->getWarehouse()->id);
+        $this->warehouseService->updateTemperatureOfWarehouse($room->getWarehouse());
         return $room;
     }
 
@@ -77,7 +78,7 @@ class RoomsController extends Controller
     {
         $room = Rooms::findOrFail($id);
         $room->delete();
-        $this->warehouses->updateTemperatureOfWarehouse($room->getWarehouse()->id);
+        $this->warehouseService->updateTemperatureOfWarehouse($room->getWarehouse());
         return '';
     }
 }

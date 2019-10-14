@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Crypt;
 
 class CookieController extends Controller
 {
@@ -24,13 +23,5 @@ class CookieController extends Controller
             'Latitude'  => Cookie::get('Latitude'),
         ]);
         return $request;
-     }
-
-     public function getDecryptedPosition() {
-        $request = new Request([
-            'Longtitude'   => Crypt::decrypt(Cookie::get('Longtitude'), false),
-            'Latitude'  => Crypt::decrypt(Cookie::get('Latitude'), false),
-        ]);
-        return $request;        
      }
 }

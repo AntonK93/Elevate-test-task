@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Warehouses extends Model
 
     public function getRooms()
     {
-      return $this->hasMany('App\Rooms', 'Warehouse');
+      return $this->hasMany('App\Model\Rooms', 'Warehouse');
     }
 
     public function getHighestRoomTemperature()

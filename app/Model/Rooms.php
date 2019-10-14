@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,7 @@ class Rooms extends Model
 
     public function getWarehouse()
     {
-      return $this->belongsTo('App\Warehouses', 'Warehouse', 'id')->first();
+      return $this->belongsTo('App\Model\Warehouses', 'Warehouse', 'id')->first();
     }
+
 }

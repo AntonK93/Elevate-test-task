@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Services\OpenMapDistance;
+use App\Http\Services\OpenMapDistance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Warehouses;
+use App\Model\Warehouses;
 
 class WarehousesController extends Controller
 {
     private $openMap;
-    private $statuses;
 
     /**
-     * Injected dependency of OpenMap,StatusesController
+     * Injected dependency of OpenMap
      */
-    public function __construct(OpenMapDistance $openMap, StatusesController $statusesController)
+    public function __construct(OpenMapDistance $openMap)
     {
         $this->openMap = $openMap;
-        $this->statuses = $statusesController;
     }
 
     /**
@@ -29,20 +27,6 @@ class WarehousesController extends Controller
     public function index()
     {
         return Warehouses::all();
-    }
-
-    /**
-     * Update status of warehouse
-     */
-    public function updateTemperatureOfWarehouse($id) 
-    {
-        $warehouse = Warehouses::findOrFail($id);
-
-        $highetWarehouseTemperature = $warehouse->getHighestRoomTemperature();
-
-        $getStatus = $this->statuses->getStatusOfDegree($highetWarehouseTemperature);
-        
-        $warehouse->update(['Status' => $getStatus->Name, 'Temperature' => $highetWarehouseTemperature]);
     }
 
     /**
@@ -91,9 +75,8 @@ class WarehousesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $warehouses = Warehouses::findOrFail($id);
-        $warehouses->update($request->all());
- 
+        $warehouse = Warehouses::findOrFail($id);
+        $warehouse->update($request->all());
         return $warehouses;
     }
 
@@ -105,8 +88,8 @@ class WarehousesController extends Controller
      */
     public function destroy($id)
     {
-        $warehouses = Warehouses::findOrFail($id);
-        $warehouses->delete();
+        $warehouse = Warehouses::findOrFail($id);
+        $warehouse->delete();
         return '';
     }
 }

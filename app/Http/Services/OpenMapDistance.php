@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Services;
+namespace App\Http\Services;
 
-use App\Http\Controllers\Cookie\CookieController;
+use App\Http\Services\CookieService;
 
 class OpenMapDistance 
 {
@@ -11,9 +11,9 @@ class OpenMapDistance
     private $cookies;
 
     /**
-     * Injected dependency of Cookies
+     * Injected dependency of CookieService
      */
-    public function __construct(CookieController $cookies)
+    public function __construct(CookieService $cookies)
     {
         $this->cookies = $cookies;
     }
